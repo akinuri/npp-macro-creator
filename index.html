@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Notepad++ Macro Creator</title>
+        <link rel="stylesheet" type="text/css" media="screen" href="" />
+        <style>
+            * {
+                margin: 0;
+                padding: 0
+            }
+            body {
+                background: gainsboro;
+            }
+            #main {
+                display: table;
+                margin: 20px auto;
+                background: rgb(250,250,250);
+                padding: 20px;
+                border: 1px solid darkgray;
+                box-shadow: 0 0 2px rgba(0,0,0,.2);
+            }
+            textarea {
+                padding: 5px;
+                width: 700px;
+                height: 300px;
+                display: block;
+                font-size: 13px;
+                line-height: 1.5;
+            }
+            #input {
+                height: 150px;
+            }
+            input {
+                display: block;
+                padding: 5px 10px;
+                margin: 5px 0;
+            }
+        </style>
+    <head>
+<body>
+
+<div id="main">
+<textarea id="input" placeholder="Input">
+<html>
+    <body></body>
+</html></textarea>
+    <input type="button" id="convert" value="Create macro" />
+    <textarea id="output"placeholder="Output"></textarea>
+</div>
+
+<script src=""></script>
+<script>
+    var inputBox      = document.getElementById("input");
+    var outputBox     = document.getElementById("output");
+    var convertButton = document.getElementById("convert");
+    
+    var dict = [
+        [/</,   "&lt;"],
+        [/>/,   "&gt;"],
+        [/"/,   "&quot;"],
+        [/\r/,  "&#x000D;"],
+        [/\n/,  "&#x000A;"],
+    ];
+    
+    convertButton.onclick = function convertTextToMacro() {
+        var chars = inputBox.value.replace(/(\r\n|\n)/, "\r\n").split("");
+        var macro = '<Macro name="" Ctrl="no" Alt="no" Shift="no" Key="0">\r\n';
+        for (var i = 0; i < chars.length; i++) {
+            var c = chars[i];
+            for (var j = 0; j < dict.length; j++) {
+                c = c.replace(dict[j][0], dict[j][1]);
+            }
+            macro += '    <Action type="1" message="2170" wParam="0" lParam="0" sParam="' + c +  '" />\r\n';
+        }
+        macro += '</Macro>';
+        outputBox.value = macro;
+    };
+    
+</script>
+
+</body>
+</html>
