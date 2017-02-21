@@ -4,7 +4,7 @@ Convert a pre-written text/code to macro (XML).
 
 ## Example output
 
-`Hello, World!` becomes:
+`"Hello, World!"` becomes:
 
 ```xml
 <Macro name="Hello World" Ctrl="no" Alt="no" Shift="no" Key="0">
